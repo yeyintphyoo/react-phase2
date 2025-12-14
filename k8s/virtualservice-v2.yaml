@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: react-vs-v2
+  namespace: react-phase2
+spec:
+  hosts:
+  - "react-phase2.example.com"
+  gateways:
+  - istio-system/react-gateway-phase2
+  http:
+  - route:
+    - destination:
+        host: react-frontend
+        subset: v1
+      weight: 50
+    - destination:
+        host: react-frontend
+        subset: v2
+      weight: 50
+
