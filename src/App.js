@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React Now Phase2-v2
+          Learn React Phase2-V2
         </a>
       </header>
     </div>
