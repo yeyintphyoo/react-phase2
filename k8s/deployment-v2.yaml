@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: react
-          image: cescye/react-phase2:canary-v1
+          image: cescye/react-phase2:canary-v2
           ports:
             - containerPort: 80
 
