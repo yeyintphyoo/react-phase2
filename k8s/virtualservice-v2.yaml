@@ -13,9 +13,9 @@ spec:
     - destination:
         host: react-frontend
         subset: v1
-      weight: 50
+      weight: 0
     - destination:
         host: react-frontend
         subset: v2
-      weight: 50
+      weight: 100
 
