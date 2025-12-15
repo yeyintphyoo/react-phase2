@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: react
-          image: cescye/react-phase2:PLACEHOLDER
+          image: cescye/react-phase2:9ce7d690ff39db91dcde860ed9ce66c01c5f3881
           imagePullPolicy: Always
           ports:
             - containerPort: 80
