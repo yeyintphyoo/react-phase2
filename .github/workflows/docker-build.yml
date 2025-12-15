@@ -1,10 +1,8 @@
-name: Build and Push to Docker Hub
+name: Build and Deploy React App
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -14,28 +12,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Log in to Docker Hub
+    - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build Docker image
+    - name: Build & Push Docker Image
       run: |
-        IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v2"
+        IMAGE=cescye/react-phase2:${GITHUB_SHA}
         docker build -t $IMAGE .
-
-    - name: Push Docker image
-      run: |
-        IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v2"
         docker push $IMAGE
 
-    - name: Update k8s manifest (image tag)
+    - name: Update deployment manifest with Git SHA
       run: |
-        sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v2|" k8s/deployment-v2.yaml
+        sed -i "s|image: .*|image: cescye/react-phase2:${GITHUB_SHA}|" k8s/deployment-v2.yaml
 
     - name: Commit manifest update
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: Update image tag automatically
+        commit_message: "Deploy image ${GITHUB_SHA}"
         branch: main
