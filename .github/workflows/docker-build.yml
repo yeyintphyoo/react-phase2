@@ -22,17 +22,17 @@ jobs:
 
     - name: Build Docker image
       run: |
-        IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v1"
+        IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v2"
         docker build -t $IMAGE .
 
     - name: Push Docker image
       run: |
-        IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v1"
+        IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v2"
         docker push $IMAGE
 
     - name: Update k8s manifest (image tag)
       run: |
-        sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v1|" k8s/deployment-v1.yaml
+        sed -i "s|image: .*|image: ${{ secrets.DOCKERHUB_USERNAME }}/react-phase2:canary-v2|" k8s/deployment-v2.yaml
 
     - name: Commit manifest update
       uses: stefanzweifel/git-auto-commit-action@v4
